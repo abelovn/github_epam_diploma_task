@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+{% block title %}
+EPAM Alexandr Belov
+{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid" id="wrapper">
+			
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4" id="content">
+            <h2>WHAT DO YOU WANT TO DO TODAY?</h2>
+            
+            
+
+            <div class="row t10">
+                <div class="col-lg-12">
+                    <div class="btn-toolbar">
+                        <div class="btn-group">
+                            <a type="button" href="#" class="btn btn-warning">
+                                UPDATE DB
+                            </a>
+                        </div>
+                        <div class="btn-group">
+                            <a type="button" href="#" class="btn btn-warning">
+                                COLLECTION NAME and DATA
+                            </a>
+                        </div>
+                        <div class="btn-group">
+                            <a type="button" href="{{ url_for('displayall') }}" class="btn btn-warning">
+                                ALL RECORDS
+                            </a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+           
+        </div>
+    </div>
+    <br>
+
+    <footer>
+        <div class="row pad">
+            <div class="col-lg-12 text-center">
+                Copyright &copy; 2022 <strong>EPAM Alexandr Belov, stream 24</strong>
+            </div>
+        </div>
+    </footer>
+</div>
+
+
+
+{% endblock %}
