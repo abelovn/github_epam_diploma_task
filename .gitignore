@@ -2,7 +2,11 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+# my temp files
+templates/_*
+_*
+beatles.json
+personal.json
 # C extensions
 *.so
 
