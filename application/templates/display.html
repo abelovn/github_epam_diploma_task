@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+{% block title %}
+Output the data by collectionName
+
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid" id="wrapper">
+			
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4" id="content">
+            
+            
+            
+
+            <div class="row t10 align-content">
+                <div class="col-lg-12">
+				    <div class="title">
+    Output the data by collectionName in ascending order:<br>
+                       <button onclick="history.back()">Go Back</button>
+                   </div>
+                   <!-- <div class=" align-content"> -->
+                       {% for el in distField %}
+                       {{ el[0]}}    
+                        {{ el[1]}}
+                       <br>
+                       {% endfor %}
+                   
+                      
+                   <!-- </div> -->
+                   
+                </div>
+            </div>
+
+           
+        </div>
+    </div>
+    <br>
+
+    <footer>
+        <div class="row pad">
+            <div class="col-lg-12 text-center">
+                Copyright &copy; 2022 <strong>EPAM Alexandr Belov, stream 24</strong>
+            </div>
+        </div>
+    </footer>
+</div>
+    
+{% endblock %}
