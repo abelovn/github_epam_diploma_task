@@ -7,24 +7,29 @@ from pymongo import MongoClient
 import time
 from bson import json_util
 from time import sleep
-from flask import url_for
+import os
 
 app = Flask(__name__)
 
-dbname = 'epam'
-dbaddr = 'localhost'
-dbport = 27017
+db_name = 'epam'
+db_addr = 'localhost'
+db_port = 27017
 collection = 'beatles-collection'
-artistName = 'The Beatles'
+artist_name = 'The Beatles'
+#connection_str = 'mongodb://localhost:27017/?authSource=admin'
 
-client = MongoClient(dbaddr, dbport)
-mydb = client[dbname]
-mycollection = mydb[collection]
+# db_name = os.environ['db_name']
+# artist_name = os.environ['artist_name']
+# collection = os.environ['collection']
+# connection_str = os.environ['connection_str']
 
+client = MongoClient(db_addr, db_port)
+my_db = client[db_name]
+my_collection = my_db[collection]
 
 def insert_document(collection, data):
    
-    return collection.insert_one(data)
+    return my_collection.insert_one(data).inserted_id
 
 def getData(search):
     start = time.time()
@@ -33,27 +38,26 @@ def getData(search):
     record_offset = 0
     max_offset = 200
     while record_count > 0:
-
-        response = (requests.get('https://itunes.apple.com/search?term=' + str(search)+
-            '&offset='+
-            str(record_offset)+
-            '&limit='+
-            str(max_offset-1))
-        ).json()
+        try:
+            response = (requests.get('https://itunes.apple.com/search?term=' 
+            + str(search)+'&offset='
+            + str(record_offset)+'&limit=' 
+            + str(max_offset-1))).json()
+        except ValueError:  # includes simplejson.decoder.JSONDecodeError
+            print('Decoding JSON has failed')
+            continue
         record_count = response["resultCount"]
         total_count += record_count 
         record_offset = int(record_offset) + max_offset
         for one_record in response["results"]:
             if not one_record:
-                insert_document(mycollection, None)
+                insert_document(my_collection, None)
                 continue
-            insert_document(mycollection, one_record)
+            insert_document(my_collection, one_record)
         end = time.time()
         print(end - start)    
     return total_count
     
-   
-
 # Main page
 @app.route("/")
 def index():
@@ -63,39 +67,36 @@ def index():
 @app.route("/updatedb")
 
 def updatedb():
-     mydb.drop_collection(mycollection)
-     return render_template("updatedb.html", totalCount = getData(artistName))
+     my_db.drop_collection(my_collection)
+     return render_template("updatedb.html", total_count = getData(artist_name))
 
+# @app.route("/count")
+# def update():
+#      documentcount = my_collection.count_documents({})
+#      print (my_collection.distinct("collectionName"))
 
-
-
-@app.route("/count")
-def update():
-     documentcount = mycollection.count_documents({})
-     print (mycollection.distinct("collectionName"))
-
-     return render_template("count.html", documentcount = documentcount)     
+#      return render_template("count.html", documentcount = documentcount)     
 
 # Output the data by collectionName sorted by relaseDate
 @app.route("/display")
 def display():
      result = []
-     fullList = mycollection.find({"artistName":artistName})
-     distField = fullList.distinct("collectionName")
-     for el in distField:
-         result.append([mycollection.find_one({"collectionName":el, "artistName":artistName})["releaseDate"], el])
-     return render_template("display.html", distField = sorted(result))
+     full_list = my_collection.find({"artistName" : artist_name})
+     dist_field = full_list.distinct("collectionName")
+     for el in dist_field:
+         result.append([my_collection.find_one({"collectionName": el, "artistName" : artist_name})["releaseDate"], el])
+     return render_template("display.html", dist_field = sorted(result))
 
 # Output all data
 @app.route("/displayall", methods=['POST', 'GET'])
 def displayall():
      if request.method == "POST" and (request.form['number']).isdigit():
-         recNum = request.form['number']
-         fullList = mycollection.find({"artistName":artistName}).limit(int(recNum))
+         record_num = request.form['number']
+         full_list = my_collection.find({"artistName": artist_name}).limit(int(record_num))
      else:
-         fullList = mycollection.find({"artistName":artistName})
+         full_list = my_collection.find({"artistName": artist_name})
      
-     return render_template("displayall.html", fullList = fullList)
+     return render_template("displayall.html", full_list = full_list)
 
 if __name__ == "__main__":
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')
