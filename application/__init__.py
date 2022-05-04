@@ -7,7 +7,7 @@ from pymongo import MongoClient
 import time
 from bson import json_util
 from time import sleep
-from flask import url_for
+import os
 
 app = Flask(__name__)
 
@@ -16,6 +16,16 @@ dbaddr = 'localhost'
 dbport = 27017
 collection = 'beatles-collection'
 artistName = 'The Beatles'
+#connection_str = 'mongodb://localhost:27017/?authSource=admin'
+
+
+# dbname = os.environ['dbname']
+# artistname = os.environ['artistname']
+# collection = os.environ['collection']
+# connection_str = os.environ['connection_str']
+
+
+
 
 client = MongoClient(dbaddr, dbport)
 mydb = client[dbname]
@@ -24,7 +34,8 @@ mycollection = mydb[collection]
 
 def insert_document(collection, data):
    
-    return collection.insert_one(data)
+    return mycollection.insert_one(data).inserted_id
+    
 
 def getData(search):
     start = time.time()
@@ -33,13 +44,13 @@ def getData(search):
     record_offset = 0
     max_offset = 200
     while record_count > 0:
+        try:
 
-        response = (requests.get('https://itunes.apple.com/search?term=' + str(search)+
-            '&offset='+
-            str(record_offset)+
-            '&limit='+
-            str(max_offset-1))
-        ).json()
+
+            response = (requests.get('https://itunes.apple.com/search?term=' + str(search)+'&offset='+str(record_offset)+'&limit='+str(max_offset-1))).json()
+        except ValueError:  # includes simplejson.decoder.JSONDecodeError
+            print('Decoding JSON has failed')
+            continue
         record_count = response["resultCount"]
         total_count += record_count 
         record_offset = int(record_offset) + max_offset
@@ -98,4 +109,4 @@ def displayall():
      return render_template("displayall.html", fullList = fullList)
 
 if __name__ == "__main__":
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')
