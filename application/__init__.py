@@ -11,19 +11,20 @@ import os
 
 app = Flask(__name__)
 
-db_name = 'epam'
-db_addr = 'localhost'
-db_port = 27017
-collection = 'beatles-collection'
-artist_name = 'The Beatles'
+# db_name = 'epam'
+# db_addr = 'localhost'
+# db_port = 27017
+# collection = 'beatles-collection'
+# artist_name = 'The Beatles'
 #connection_str = 'mongodb://localhost:27017/?authSource=admin'
 
-# db_name = os.environ['db_name']
-# artist_name = os.environ['artist_name']
-# collection = os.environ['collection']
-# connection_str = os.environ['connection_str']
+db_name = os.environ['db_name']
+artist_name = os.environ['artist_name']
+collection = os.environ['collection']
+connection_str = os.environ['connection_str']
 
-client = MongoClient(db_addr, db_port)
+# client = MongoClient(db_addr, db_port)
+client = MongoClient(connection_str)
 my_db = client[db_name]
 my_collection = my_db[collection]
 
