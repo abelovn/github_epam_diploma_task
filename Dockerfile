@@ -5,10 +5,10 @@ RUN pip install uwsgi flask pymongo requests
 
 
 RUN git clone https://github.com/abelovn/github_epam_diploma_task.git
-WORKDIR github_epam_diploma_task
+WORKDIR /github_epam_diploma_task
 ENV db_name='epam'
 ENV artist_name='The Beatles'
 ENV collection='beatles-collection' 
-ENV connection_str='mongodb://localhost:27017/?authSource=admin'
+ENV connection_str='mongodb://mongo:27017/?authSource=admin'
 
 ENTRYPOINT uwsgi --socket 0.0.0.0:5000 --protocol=http -w wsgi:app --enable-threads
