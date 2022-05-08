@@ -43,6 +43,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
           
+      - uses: azure/setup-kubectl@v2.0
+        with:
+          version: 'v1.23.6'    
       - name: Deploy to Kubernetes cluster                                                              
         uses: kodermax/kubectl-aws-eks@master
         env:           
