@@ -6,7 +6,7 @@ RUN pip install uwsgi flask pymongo requests
 ARG BRANCH
 RUN mkdir app 
 RUN git clone -b $BRANCH https://github.com/abelovn/github_epam_diploma_task.git
-WORKDIR /github_epam_diploma_task
+WORKDIR github_epam_diploma_task
 ENV db_name='epam'
 ENV artist_name='The Beatles'
 ENV collection='beatles-collection' 
