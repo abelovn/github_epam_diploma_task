@@ -1,0 +1,52 @@
+name: test
+      
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push to dev
+  push:
+    branches-ignore: [ main ]
+    
+  # Allows you to run this workflow manually from the Actions tag
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    # The var determines namespace which we use next in the pipeline
+    env:
+      MENV : iac-feature
+      IMGNAME: abelovn/my_registry
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      
+      
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: $IMGNAME
+          tags: test
+          registry: docker.io
+          # SET env var which we use in dockerfile as ARG to use in container
+          buildArgs: BRANCH=$MENV
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+          
+      - name: Deploy to Kubernetes cluster                                                              
+        uses: kodermax/kubectl-aws-eks@master
+        env:           
+          #RELEASE_IMAGE: $IMGNAME:latest
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: rollout restart deployment/web -n $MENV
