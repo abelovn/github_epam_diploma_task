@@ -49,4 +49,3 @@ jobs:
           #RELEASE_IMAGE: $IMGNAME:latest
           KUBECTL_VERSION: "v1.23.6" 
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-
