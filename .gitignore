@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+__pycache__\
 *.py[cod]
 *$py.class
 # my temp files
@@ -26,6 +27,20 @@ var/
 wheels/
 share/python-wheels/
 *.egg-info/
+build\
+develop-eggs\
+dist\
+downloads\
+eggs\
+.eggs\
+lib\
+lib64\
+parts\
+sdist\
+var\
+wheels\
+share/python-wheels\
+*.egg-info\
 .installed.cfg
 *.egg
 MANIFEST
@@ -44,6 +59,9 @@ pip-delete-this-directory.txt
 htmlcov/
 .tox/
 .nox/
+htmlcov\
+.tox\
+.nox\
 .coverage
 .coverage.*
 .cache
@@ -54,6 +72,9 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+.hypothesis\
+.pytest_cache\
+cover\
 
 # Translations
 *.mo
@@ -74,16 +95,20 @@ instance/
 
 # Sphinx documentation
 docs/_build/
+docs\_build\
 
 # PyBuilder
 .pybuilder/
+.pybuilder\
 target/
+target\
 
 # Jupyter Notebook
 .ipynb_checkpoints
 
 # IPython
 profile_default/
+profile_default\
 ipython_config.py
 
 # pyenv
@@ -107,6 +132,7 @@ ipython_config.py
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
+__pypackages__\
 
 # Celery stuff
 celerybeat-schedule
@@ -123,6 +149,11 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+env\
+venv\
+ENV\
+env.bak\
+venv.bak\
 
 # Spyder project settings
 .spyderproject
@@ -136,6 +167,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+.mypy_cache\
 .dmypy.json
 dmypy.json
 
@@ -144,18 +176,18 @@ dmypy.json
 
 # pytype static type analyzer
 .pytype/
-
+.pytype\
 # Cython debug symbols
 cython_debug/
+cython_debug\
 
 # k8s secrets
 *secrets.yml
 secrets.yml
-# Local .terraform directories
-**/.terraform/*
 
 # Local .terraform directories
 **/.terraform/*
+**\.terraform\*
 
 # .tfstate files
 *.tfstate
