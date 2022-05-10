@@ -1,6 +1,6 @@
 name: push_project_to_dockerhub
 
-#on:
+##on:
 ##  push:
  #   branches: [ main ]
 #  pull_request:
