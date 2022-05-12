@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: abelovn
+  template:
+    metadata:
+      labels:
+        app: abelovn
+        name: web
+        namespace: development
+    spec:
+      containers:
+      - name: web
+        image: abelovn/my_registry:latest
+        env:
+        - name: connection-str
+          valueFrom: 
+            secretKeyRef:
+              name: secrets
+              key: connection_str
+        ports:
+          - containerPort: 5000
+            name: http
+            protocol: TCP
+        resources:
+          requests:
+            cpu: 400m
+        livenessProbe:
+          tcpSocket:
+            port: 5000
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          tcpSocket:
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        imagePullPolicy: Always

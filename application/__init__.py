@@ -18,16 +18,29 @@ app = Flask(__name__)
 # artist_name = 'The Beatles'
 #connection_str = 'mongodb://localhost:27017/?authSource=admin'
 
-db_name = os.environ['db_name']
-artist_name = os.environ['artist_name']
-collection = os.environ['collection']
-connection_str = os.environ['connection_str']
+# default
+db_name = "test"
+aartist_name = "test"
+collection = "test"
+connection_str = "test"
+fmt = '%Y-%m-%d %H:%M:%S'
 
-# client = MongoClient(db_addr, db_port)
-client = MongoClient(connection_str)
-my_db = client[db_name]
-my_collection = my_db[collection]
+try:
+    
+    db_name = os.environ['db_name']
+    artist_name = os.environ['artist_name']
+    collection = os.environ['collection']
+    connection_str = os.environ['connection_str']
+except:
+    print("Env vars are not set")    
 
+try:
+    # client = MongoClient(db_addr, db_port)
+    client = MongoClient(connection_str)
+    my_db = client[db_name]
+    my_collection = my_db[collection]
+except:
+    print("DB connection failed")
 def insert_document(collection, data):
    
     return my_collection.insert_one(data).inserted_id
