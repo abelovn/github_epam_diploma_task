@@ -29,7 +29,7 @@ jobs:
         name: Build & push Docker image
         with:
           image: $IMGNAME
-          tags: test
+          tags: latest
           registry: docker.io
           # SET env var which we use in dockerfile as ARG to use in container
           buildArgs: BRANCH=$MENV
