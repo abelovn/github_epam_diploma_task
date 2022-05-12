@@ -2,13 +2,14 @@ FROM ubuntu:latest
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update -y
 RUN apt install python3-pip python3-dev build-essential libssl-dev libffi-dev python3-setuptools git wget nano vim -y
-RUN pip install uwsgi flask pymongo requests
+RUN uwsgi-plugin-python3
+RUN pip install flask pymongo requests
 RUN echo "deb http://security.ubuntu.com/ubuntu impish-security main" | tee /etc/apt/sources.list.d/impish-security.list
-RUN apt-get update -y
+RUN apt update -y
 RUN apt install libssl1.1 -y
 RUN wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | apt-key add -
 RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-5.0.list
-RUN apt-get update -y
+RUN apt update -y
 RUN apt install -y mongodb-org
 # RUN prometheus-flask-exporter#
 
