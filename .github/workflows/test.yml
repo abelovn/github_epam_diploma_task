@@ -60,3 +60,12 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           args: apply -f k8s/app-depl.yml -n development
+
+      - name: Update load balancer
+        uses: kodermax/kubectl-aws-eks@master
+        env:
+          KUBECTL_VERSION: "v1.23.6"
+          #RELEASE_IMAGE: $IMGNAME:latest
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: apply -f k8s/app-srv-loadbalancer-dev.yml -n development   
