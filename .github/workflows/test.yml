@@ -68,4 +68,4 @@ jobs:
           #RELEASE_IMAGE: $IMGNAME:latest
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f k8s/app-srv-loadbalancer-dev.yml -n development   
+          args: apply -f k8s/app-loadbalancer.yml -n development   
