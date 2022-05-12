@@ -55,6 +55,7 @@ jobs:
       - name: Update deployment app
         uses: kodermax/kubectl-aws-eks@master
         env:
+          KUBECTL_VERSION: "v1.23.6"
           #RELEASE_IMAGE: $IMGNAME:latest
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
