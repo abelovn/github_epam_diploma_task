@@ -2,7 +2,7 @@ FROM ubuntu:latest
 RUN apt update -y
 RUN apt install python3-pip python3-dev build-essential libssl-dev libffi-dev python3-setuptools git wget nano vim -y
 RUN pip install uwsgi flask pymongo requests
-RUN echo "deb http://security.ubuntu.com/ubuntu impish-security main" | sudo tee /etc/apt/sources.list.d/impish-security.list
+RUN echo "deb http://security.ubuntu.com/ubuntu impish-security main" | tee /etc/apt/sources.list.d/impish-security.list
 RUN apt-get update
 RUN apt install libssl1.1
 RUN wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | apt-key add -
