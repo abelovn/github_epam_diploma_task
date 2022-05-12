@@ -19,10 +19,10 @@ app = Flask(__name__)
 #connection_str = 'mongodb://localhost:27017/?authSource=admin'
 
 # default
-db_name = "test"
-aartist_name = "test"
-collection = "test"
-connection_str = "test"
+# db_name = "test"
+# aartist_name = "test"
+# collection = "test"
+# connection_str = "test"
 fmt = '%Y-%m-%d %H:%M:%S'
 
 try:
