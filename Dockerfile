@@ -10,7 +10,7 @@ RUN apt install libssl1.1 -y
 RUN wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | apt-key add -
 RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-5.0.list
 RUN apt update -y
-RUN apt install -y mongodb-org
+RUN apt-get install mongodb-org=5.0.8 mongodb-org-database=5.0.8 mongodb-org-server=5.0.8 mongodb-org-shell=5.0.8 mongodb-org-mongos=5.0.8 mongodb-org-tools=5.0.8 -y
 # RUN prometheus-flask-exporter#
 
 

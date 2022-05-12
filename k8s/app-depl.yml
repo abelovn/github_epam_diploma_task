@@ -18,7 +18,7 @@ spec:
       - name: web
         image: abelovn/my_registry:latest
         env:
-        - name: connection-str
+        - name: connection_str
           valueFrom: 
             secretKeyRef:
               name: secrets
