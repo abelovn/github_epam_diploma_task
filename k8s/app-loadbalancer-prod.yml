@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-app
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "240"
+spec:
+  type: LoadBalancer
+  selector:
+    app: abelovn
+    name: web
+    namespace: production
+  ports:
+    - port: 8080
+      targetPort: 5000

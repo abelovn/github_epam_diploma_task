@@ -1,10 +1,10 @@
-name: test
+name: main-test
       
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push to dev
   push:
-    branches-ignore: [ main ]
+    branches: [ main ]
     
   # Allows you to run this workflow manually from the Actions tag
   workflow_dispatch:
@@ -18,8 +18,8 @@ jobs:
     
     # The var determines namespace which we use next in the pipeline
     env:
-      MENV : dev-workflow
-      IMGNAME: abelovn/my_registry
+      MENV : production
+      IMGNAME: abelovn/my_registry_prod
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -36,10 +36,10 @@ jobs:
         name: Build & push Docker image
         with:
           image:    $IMGNAME
-          tags:     latest
+          tags:     myapp, latest
           registry: docker.io
           # SET env var which we use in dockerfile as ARG to use in container
-          buildArgs: BRANCH=$MENV
+          buildArgs: BRANCH=main
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           
@@ -53,11 +53,11 @@ jobs:
       - name: Deploy to Kubernetes cluster                                                              
         uses: kodermax/kubectl-aws-eks@master
         env:           
-          
+
           KUBECTL_VERSION: "v1.23.6" 
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: rollout restart deployment/web -n development  
+          args: rollout restart deployment/web -n $MENV  
 
       - name: Update deployment app
         uses: kodermax/kubectl-aws-eks@master
@@ -66,7 +66,7 @@ jobs:
           
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f k8s/app-depl.yml -n development
+          args: apply -f k8s/app-depl-prod.yml -n $MENV
 
       - name: Update load balancer
         uses: kodermax/kubectl-aws-eks@master
@@ -75,4 +75,4 @@ jobs:
           #RELEASE_IMAGE: $IMGNAME:latest
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f k8s/app-loadbalancer.yml -n development   
+          args: apply -f k8s/app-loadbalancer-prod.yml -n $MENV   
