@@ -1,9 +1,12 @@
-FROM ubuntu:latest
+FROM ubuntu:22.04
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update -y
 RUN apt install python3-pip python3-dev build-essential libssl-dev libffi-dev python3-setuptools git wget nano vim -y
 # RUN apt install  uwsgi-plugin-python3 -y
-RUN pip install uwsgi flask pymongo requests
+RUN pip install uwsgi 
+RUN pip install flask 
+RUN pip install pymongo 
+RUN pip install requests 
 
 RUN echo "deb http://security.ubuntu.com/ubuntu impish-security main" | tee /etc/apt/sources.list.d/impish-security.list
 RUN apt update -y
@@ -19,7 +22,7 @@ RUN apt-get install mongodb-org=5.0.8 mongodb-org-database=5.0.8 mongodb-org-ser
 ARG BRANCH
 RUN mkdir app 
 RUN git clone -b $BRANCH https://github.com/abelovn/github_epam_diploma_task.git
-WORKDIR github_epam_diploma_task
+WORKDIR /github_epam_diploma_task
 
 RUN wget https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem
 
