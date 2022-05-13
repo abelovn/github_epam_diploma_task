@@ -32,6 +32,6 @@ RUN wget https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem
 ENV db_name='epam'
 ENV artist_name='The Beatles'
 ENV collection='beatles-collection' 
-ENV connection_str='mongodb://root1:password1@docdb-cluster-abelovn-0.chwzxdshuqus.us-east-2.docdb.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&retryWrites=false'
+# ENV connection_str='mongodb://root1:password1@docdb-cluster-abelovn-0.chwzxdshuqus.us-east-2.docdb.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&retryWrites=false'
 
 ENTRYPOINT uwsgi --socket 0.0.0.0:5000 --protocol=http -w wsgi:app --enable-threads
