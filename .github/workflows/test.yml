@@ -18,7 +18,7 @@ jobs:
     
     # The var determines namespace which we use next in the pipeline
     env:
-      MENV : k8s-feature1
+      MENV : test1
       IMGNAME: abelovn/my_registry
     
     # Steps represent a sequence of tasks that will be executed as part of the job
