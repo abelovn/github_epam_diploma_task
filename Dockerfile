@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:18.04
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update -y
 RUN apt install python3-pip python3-dev build-essential libssl-dev libffi-dev python3-setuptools git wget nano vim -y
