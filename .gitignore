@@ -184,6 +184,8 @@ cython_debug\
 # k8s secrets
 *secrets.yml
 secrets.yml
+secrets*.yml
+
 
 # Local .terraform directories
 **/.terraform/*
@@ -221,4 +223,4 @@ override.tf.json
 .terraformrc
 terraform.rc
 #
-###
+####
