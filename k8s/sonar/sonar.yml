@@ -39,7 +39,8 @@ spec:
         - name: sonar-data
           mountPath: /sonar-data
       containers:
-      - image: sonarqube:7.9.4-community
+      # - image: sonarqube:7.9.4-community
+      - image: sonarqube:7.7-community
         name: sonar
         volumeMounts:
         - name: sonar-data
@@ -50,7 +51,7 @@ spec:
           httpGet:
             path: /
             port: 9000
-          initialDelaySeconds: 5
+          initialDelaySeconds: 10
           timeoutSeconds: 5
       volumes:
       - name: sonar-data
@@ -58,6 +59,7 @@ spec:
           claimName: sonar-data
 
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
