@@ -3,6 +3,7 @@ from typing import Collection
 from flask import Flask, render_template, url_for, request
 import requests
 from pymongo import MongoClient
+from prometheus_flask_exporter import PrometheusMetrics
 
 import time
 from bson import json_util
@@ -10,6 +11,7 @@ from time import sleep
 import os
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
 
 # db_name = 'epam'
 # db_addr = 'localhost'
