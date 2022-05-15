@@ -7,6 +7,7 @@ RUN pip install uwsgi
 RUN pip install flask 
 RUN pip install pymongo 
 RUN pip install requests 
+RUN pip install prometheus-flask-exporter
 
 RUN echo "deb http://security.ubuntu.com/ubuntu impish-security main" | tee /etc/apt/sources.list.d/impish-security.list
 RUN apt update -y
