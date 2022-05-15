@@ -19,7 +19,7 @@ jobs:
     # The var determines namespace which we use next in the pipeline
     env:
 
-      MENV : dev-workflow
+      MENV : dev-workflow-elk
       IMGNAME: abelovn/my_registry
     
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -39,7 +39,7 @@ jobs:
           image:    $IMGNAME
           tags:     latest
           registry: docker.io
-          # SET env var which we use in dockerfile as ARG to use in container#
+          # SET env var which we use in dockerfile as ARG to use in container
           buildArgs: BRANCH=$MENV
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
