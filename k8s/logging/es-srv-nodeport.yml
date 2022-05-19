@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: es
+  labels:
+    name: es
+spec:
+  selector:
+    common.k8s.elastic.co/type: elasticsearch
+    elasticsearch.k8s.elastic.co/cluster-name: quickstart
+    # elasticsearch.k8s.elastic.co/statefulset-name: quickstart-es-default
+    # elasticsearch.k8s.elastic.co/statefulset-name: es-cluster
+  type: NodePort
+  ports:
+   - port: 9200
+     targetPort: 9200
+     protocol: TCP
+
