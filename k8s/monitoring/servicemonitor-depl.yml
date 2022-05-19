@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: webapp-super
+  name: github-epam-diploma-task
   labels:
     app: abelovn
     name: web
