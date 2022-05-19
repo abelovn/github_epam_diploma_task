@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: github-epam-diploma-task
+  labels:
+    app: abelovn
+    name: web
+    release: prometheus # You need to verify what is your realease name pf prometheus
+  namespace: monitoring # choose in what name space your prometheus is 
+spec:
+  namespaceSelector:
+    matchNames:
+    - development
+  selector:
+    matchLabels:
+      app: abelovn
+      name: web
+  endpoints:
+  - port: http # http - is a port name which was put in service.yaml
