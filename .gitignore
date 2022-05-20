@@ -224,3 +224,5 @@ override.tf.json
 terraform.rc
 #
 ####
+iac/kubeconfig_abelovn-eks
+install.ps1

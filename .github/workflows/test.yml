@@ -19,7 +19,7 @@ jobs:
     # The var determines namespace which we use next in the pipeline
     env:
 
-      MENV : dev-workflow-elk
+      MENV : feature-main-workflow
       IMGNAME: abelovn/my_registry
     
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -64,16 +64,24 @@ jobs:
         uses: kodermax/kubectl-aws-eks@master
         env:
           KUBECTL_VERSION: "v1.23.6"
-
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           args: apply -f k8s/app-depl.yml -n development
+
+
+
+      - name: HorizontalPodAutoscaler
+        uses: kodermax/kubectl-aws-eks@master
+        env:
+          KUBECTL_VERSION: "v1.23.6"
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: apply -f k8s/app-hpa.yml -n development    
 
       - name: Update load balancer
         uses: kodermax/kubectl-aws-eks@master
         env:
           KUBECTL_VERSION: "v1.23.6"
-          #RELEASE_IMAGE: $IMGNAME:latest
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           args: apply -f k8s/app-loadbalancer.yml -n development   
