@@ -68,11 +68,22 @@ jobs:
         with:
           args: apply -f k8s/app-depl-prod.yml -n $MENV
 
+      - name: HorizontalPodAutoscaler
+        uses: kodermax/kubectl-aws-eks@master
+        env:
+          KUBECTL_VERSION: "v1.23.6"
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: apply -f k8s/app-hpa-prod.yml -n $MENV      
+
+
+
+
+
       - name: Update load balancer
         uses: kodermax/kubectl-aws-eks@master
         env:
           KUBECTL_VERSION: "v1.23.6"
-          #RELEASE_IMAGE: $IMGNAME:latest
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           args: apply -f k8s/app-loadbalancer-prod.yml -n $MENV   
