@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: github-epam-diploma-task-dev
+  name: github-epam-diploma-task
   labels:
     app: abelovn
     name: web
@@ -10,7 +10,7 @@ metadata:
 spec:
   namespaceSelector:
     matchNames:
-    - development
+    - production
   selector:
     matchLabels:
       app: abelovn
