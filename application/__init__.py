@@ -12,6 +12,13 @@ import os
 import socket
 from datetime import datetime
 
+def stress_test():
+    a = b = 1
+    element = 1750000
+
+    for _ in range(int(element-2)):
+        a, b = b, a + b
+
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
 
@@ -119,6 +126,12 @@ def displayall():
          full_list = my_collection.find({"artistName": artist_name})
      
      return render_template("displayall.html", full_list = full_list)
+
+@app.route('/stress')
+def stress():
+    timestamp = datetime.today().replace(microsecond=0)
+    stress_test()
+    return render_template('stress.html', timestamp=timestamp)     
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
