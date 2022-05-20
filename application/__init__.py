@@ -83,7 +83,6 @@ def index():
 
 # Drop db and get records
 @app.route("/updatedb")
-
 def updatedb():
      my_db.drop_collection(my_collection)
      return render_template("updatedb.html", total_count = getData(artist_name))
@@ -96,6 +95,11 @@ def updatedb():
 #      return render_template("count.html", documentcount = documentcount)     
 
 # Output the data by collectionName sorted by relaseDate
+@app.route("/dropdb")
+def dropdb():
+     my_collection.drop()
+     return render_template("dropdb.html")
+
 @app.route("/display")
 def display():
      result = []
