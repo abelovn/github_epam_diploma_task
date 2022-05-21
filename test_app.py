@@ -31,4 +31,7 @@ class TestFuncs(unittest.TestCase):
       self.assertEqual(1, 1)
 
   def stress(self):
-      self.assertEqual(1, 1)        
+      self.assertEqual(1, 1)       
+
+  def stress_test(self):
+      self.assertEqual(1, 1)  
