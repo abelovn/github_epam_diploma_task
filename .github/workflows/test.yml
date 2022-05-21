@@ -32,7 +32,7 @@ jobs:
         uses: abelovn/sonarqube-action@v1.1.0
         with:
           
-          projectBaseDir: "/github_epam_diploma_task"
+          projectBaseDir: "."
           projectKey: "github_epam_diploma_task"
           projectName: "github_epam_diploma_task"
           host: ${{ secrets.SONARQUBE_HOST }}
