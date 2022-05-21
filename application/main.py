@@ -56,7 +56,7 @@ def insert_document(collection, data):
    
     return my_collection.insert_one(data).inserted_id
 
-def getData(search):
+def getdata(search):
     start = time.time()
     total_count = 0
     record_count = 1
@@ -92,7 +92,7 @@ def index():
 @app.route("/updatedb")
 def updatedb():
      my_db.drop_collection(my_collection)
-     return render_template("updatedb.html", total_count = getData(artist_name))
+     return render_template("updatedb.html", total_count = getdata(artist_name))
 
 # @app.route("/count")
 # def update():
