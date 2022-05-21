@@ -37,6 +37,7 @@ jobs:
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         env:
+          sonar.projectKey: "github_epam_diploma_task"
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       - name: SonarQube Quality Gate check
