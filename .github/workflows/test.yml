@@ -20,7 +20,7 @@ jobs:
     # The var determines namespace which we use next in the pipeline
     env:
 
-      MENV : feature-sonarcube
+      MENV : fix-sonar
       IMGNAME: abelovn/my_registry
     
     # Steps represent a sequence of tasks that will be executed as part of the job
