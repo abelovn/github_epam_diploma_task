@@ -1,4 +1,4 @@
-name: main-test
+name: production
       
 # Controls when the action will run. 
 on:
@@ -74,7 +74,21 @@ jobs:
           KUBECTL_VERSION: "v1.23.6"
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f k8s/app-hpa-prod.yml -n $MENV      
+          args: apply -f k8s/app-hpa-prod.yml -n $MENV 
+
+
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7.7'
+          
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip install requests
+          
+      - name: execute py script # run sj-gobierno.py to get the latest data
+        run: python smoketest.py        
 
 
 

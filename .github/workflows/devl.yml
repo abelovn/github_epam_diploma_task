@@ -1,4 +1,4 @@
-name: test
+name: development
       
 # Controls when the action will run. 
 on:
@@ -20,7 +20,7 @@ jobs:
     # The var determines namespace which we use next in the pipeline
     env:
 
-      MENV : fix-sonar
+      MENV : feature-smoketest
       IMGNAME: abelovn/my_registry
     
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -93,7 +93,30 @@ jobs:
           KUBECTL_VERSION: "v1.23.6"
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f k8s/app-hpa.yml -n development    
+          args: apply -f k8s/app-hpa.yml -n development
+
+
+
+      - name: Update Job
+        uses: kodermax/kubectl-aws-eks@master
+        env:
+          KUBECTL_VERSION: "v1.23.6"
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: apply -f k8s/app-job.yml -n development
+
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7.7'
+          
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip install requests
+          
+      - name: execute py script # run sj-gobierno.py to get the latest data
+        run: python smoketest.py    
 
       - name: Update load balancer
         uses: kodermax/kubectl-aws-eks@master
