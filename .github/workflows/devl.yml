@@ -97,13 +97,13 @@ jobs:
 
 
 
-      - name: Update Job
-        uses: kodermax/kubectl-aws-eks@master
-        env:
-          KUBECTL_VERSION: "v1.23.6"
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-        with:
-          args: apply -f k8s/app-job.yml -n development
+      # - name: Update Job
+      #   uses: kodermax/kubectl-aws-eks@master
+      #   env:
+      #     KUBECTL_VERSION: "v1.23.6"
+      #     KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      #   with:
+      #     args: apply -f k8s/app-job.yml -n development
 
       - name: setup python
         uses: actions/setup-python@v2
