@@ -12,7 +12,10 @@ class SmokeTests(unittest.TestCase):
 
     def test_end_points_exist(self):
         log.info("Ensuring endpoints exist")
-        self.assertEqual(SmokeTests.get("http://localhost:5000/").status_code, 200)
+        self.assertEqual(SmokeTests.get("http://a1b174c16c7ae493c8b771eacd5b8e42-1887463154.us-east-2.elb.amazonaws.com:8080/").status_code, 200)
+        self.assertEqual(SmokeTests.get("http://a1b174c16c7ae493c8b771eacd5b8e42-1887463154.us-east-2.elb.amazonaws.com:8080/displayall").status_code, 200)
+        self.assertEqual(SmokeTests.get("http://a1b174c16c7ae493c8b771eacd5b8e42-1887463154.us-east-2.elb.amazonaws.com:8080/display").status_code, 200)
+        
      
 
     # def test_api_itunes_exist(self):
