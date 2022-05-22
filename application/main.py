@@ -22,19 +22,7 @@ def stress_test():
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
 
-# db_name = 'epam'
-# db_addr = 'localhost'
-# db_port = 27017
-# collection = 'beatles-collection'
-# artist_name = 'The Beatles'
-#connection_str = 'mongodb://localhost:27017/?authSource=admin'
-
-# default
-# db_name = "test"
-# aartist_name = "test"
-# collection = "test"
-# connection_str = "test"
-fmt = '%Y-%m-%d %H:%M:%S'
+# fmt = '%Y-%m-%d %H:%M:%S'
 
 try:
     
@@ -83,25 +71,17 @@ def getdata(search):
         print(end - start)    
     return total_count
     
-# Main page
 @app.route("/")
 def index():
-     return render_template("index.html")
+     return render_template("index.html", ipaddr = socket.gethostbyname(socket.gethostname()))
 
-# Drop db and get records
+
 @app.route("/updatedb")
 def updatedb():
      my_db.drop_collection(my_collection)
      return render_template("updatedb.html", total_count = getdata(artist_name))
 
-# @app.route("/count")
-# def update():
-#      documentcount = my_collection.count_documents({})
-#      print (my_collection.distinct("collectionName"))
 
-#      return render_template("count.html", documentcount = documentcount)     
-
-# Output the data by collectionName sorted by relaseDate
 @app.route("/dropdb")
 def dropdb():
      my_collection.drop()
@@ -116,7 +96,6 @@ def display():
          result.append([my_collection.find_one({"collectionName": el, "artistName" : artist_name})["releaseDate"], el])
      return render_template("display.html", dist_field = sorted(result))
 
-# Output all data
 @app.route("/displayall", methods=['POST', 'GET'])
 def displayall():
      if request.method == "POST" and (request.form['number']).isdigit():
